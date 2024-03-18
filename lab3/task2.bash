@@ -29,7 +29,8 @@ echo "linux : $(cut -d$'\t' -f17 < ads_website.log | grep -i 'linux' -c)"
 echo "mac os x : $(cut -d$'\t' -f17 < ads_website.log | grep -i 'mac os x' -c)"
 
 echo "Read the documentation for the tee command. Repeat the analysis of the previous question for browsers running on Windows and insert tee into the pipeline such that the user agent strings (including repeats) are written to a file for further analysis (the filename should be useragents.txt )."
-cut -d$'\t' -f17 < ads_website.log | grep -i 'windows' | tee useragents.txt
+cut -d$'\t' -f17 < ads_website.log | grep -i 'windows' | tee useragents.txt > /dev/null
+
 
 echo "Why is the file access.log difficult to analyse, consider for example the analysis of question 7, with the commands you have seen so far?"
 echo "because we aren't able to easily differentiate separation whitespace and and a whitespace within a field"
