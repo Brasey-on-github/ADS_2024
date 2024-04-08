@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Directory containing the original pictures
+original_dir="./lab04_raw_files"
+
+# Destination directory
+dest_dir="./thumbnails"
+
+# Create destination directory if needed
+if [ ! -d "$rename_dir" ] ; then
+	mkdir -p $dest_dir
+fi
+
+# Loop throught files
+for file in "$original_dir"/* ; do
+
+        # Save extension
+        ext="${file##*.}"
+
+        # Create the new namw
+        new_name="${file##*/}"
+        new_name=$(echo $new_name | sed "s/\./_thumbnails&/g")
+
+        # Check it is an image 
+        if [[ "$ext" =~ ^(png|jpg)$ ]] ; then
+
+		    # Create the thumbnail
+		    convert -geometry 300 $file $dest_dir/$new_name
+        elif [[ "$ext" =~ ^(pdf)$ ]] ; then
+
+            # Change extension to jpg
+            new_name=$(echo $new_name | sed "s/\.pdf$/\.jpg/g")
+            
+            # Create the thumbnail
+            convert -geometry 300 $file[0] $dest_dir/$new_name
+        fi
+done
