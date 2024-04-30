@@ -95,3 +95,29 @@ chmod a+r,u+x file
 chmod u+x file
 ```
 
+2. Autorisations conflictuelles - Créez un fichier (vous en serez le propriétaire) où les autorisations sont configurées pour
+
+- ne pas autoriser le propriétaire ou le groupe à écrire dans le fichier, mais autorisez les autres utilisateurs à écrire dans le fichier.
+
+```sh
+$ chmod a=,o=rwx file
+$ echo "hi" > file 
+bash: file: Permission denied
+```
+
+
+# Donner à d'autres utilisateurs l'accès à vos fichiers
+
+Votre collègue est-il capable de lire les fichiers de votre répertoire personnel ? Si oui, pourquoi ?
+Si non, pourquoi pas ?
+
+- Oui car par défaut la permission de read est donner à tous le monde.
+
+Que devez-vous faire pour que votre collègue (et peut-être d'autres) puisse lire vos fichiers ? 
+
+- Il faut ajouter la permission de read pour les autre (o+r) ou bien faire en sorte que les personnes désirant lire les fichiers soit dans un groupe qui possède la permission read sur les fichiers.
+
+Que devez-vous faire pour que personne d’autre ne puisse lire vos fichiers ?
+
+- Il faut retiré la permissions de read pour les autres utilisateurs (0-r).
+
