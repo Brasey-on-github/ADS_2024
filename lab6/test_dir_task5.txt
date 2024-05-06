@@ -1,0 +1,29 @@
+test_dir2:
+total 12
+-rw-rw-r-- 1 bpil proj_b    0 May  6 16:40 baz
+drwxrwxr-x 4 bpil bpil   4096 May  6 16:39 subdir1
+drwxrwxr-x 2 bpil bpil   4096 May  6 16:39 subdir2
+drwxrwxr-x 2 bpil proj_a 4096 May  6 16:40 subdir3
+-rw-rw-r-- 1 bpil bpil      0 May  6 16:39 test1
+-rw-rw-rw- 1 bpil bpil      0 May  6 16:39 test2
+-rw-rw-r-- 1 bpil bpil      0 May  6 16:39 test3.test
+
+test_dir2/subdir1:
+total 8
+drwxrwxr-x 2 bpil bpil 4096 May  6 16:39 subdir1.1
+drwxrwxr-x 2 bpil bpil 4096 May  6 16:39 subdir1.2
+
+test_dir2/subdir1/subdir1.1:
+total 0
+-rw-rw-rw- 1 bpil bpil 0 May  6 16:39 test1.1
+
+test_dir2/subdir1/subdir1.2:
+total 0
+
+test_dir2/subdir2:
+total 0
+-rw-rw-r-- 1 bpil bpil 0 May  6 16:39 test24
+-rw-rw-r-- 1 bpil bpil 0 May  6 16:39 test_test
+
+test_dir2/subdir3:
+total 0

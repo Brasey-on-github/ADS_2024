@@ -1,0 +1,24 @@
+test_dir:
+total 8
+drwxrwxr-x 4 bpil bpil 4096 Apr 29 16:35 subdir1
+drwxrwxrwx 2 bpil bpil 4096 Apr 29 16:36 subdir2
+-rw-rw-r-- 1 bpil bpil    0 Apr 29 16:34 test1
+-rw-rw-rw- 1 bpil bpil    0 Apr 29 16:34 test2
+-rw-rw-r-- 1 bpil bpil    0 Apr 29 16:34 test3.test
+
+test_dir/subdir1:
+total 8
+drwxrwxr-x 2 bpil bpil 4096 Apr 29 16:35 subdir1.1
+drwxrwxrwx 2 bpil bpil 4096 Apr 29 16:35 subdir1.2
+
+test_dir/subdir1/subdir1.1:
+total 0
+-rw-rw-rw- 1 bpil bpil 0 Apr 29 16:35 test1.1
+
+test_dir/subdir1/subdir1.2:
+total 0
+
+test_dir/subdir2:
+total 0
+-rw-rw-r-- 1 bpil bpil 0 Apr 29 16:34 test24
+-rw-rw-r-- 1 bpil bpil 0 Apr 29 16:35 test_test

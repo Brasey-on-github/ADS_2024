@@ -21,6 +21,11 @@ result=$(find $1 -type f,d -perm -o+w);
 
 echo $result | tr ' ' '\n';
 
+echo "The following files/directories are writable for groups:";
+result_group=$(find $1 -type f,d ! -group "$(id -gn)" -perm -g+w);
+
+echo $result_group | tr ' ' '\n';
+
 # Do not ask if no file or dir are word writable
 if [[ (-z "$result") ]]
 then
@@ -37,5 +42,10 @@ then
     for filename in $result; do
         chmod o-w "$filename";
         echo "Write operation removed for others on $filename";
+    done
+
+    for grp_filename in $result_group; do
+        chmod g-w "$grp_filename";
+        echo "Write operation removed for others on $grp_filename";
     done
 fi
