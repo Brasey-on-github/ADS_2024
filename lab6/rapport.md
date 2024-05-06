@@ -1,9 +1,28 @@
-# Interprétation des informations sur les comptes et les groupes
+---
+title: "Labo 6"
+author: "Loïc Brasey, Bastien Pillonel"
+colorlinks: true
+numbersections: true
+header-includes: |
+    \usepackage{fancyvrb,newverbs}
+    \usepackage[top=2cm, bottom=1.5cm, left=2cm, right=2cm]{geometry}
+    \usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \lhead{ADS Labo 6 - L. Brasey, B. Pillonel}
+    \rhead{HEIG-VD - TIC}
+    \usepackage[francais]{babel}
+    \usepackage{adjustbox}
+    \usepackage{graphicx}
+    \usepackage{pdfpages}
+---
+
+# TASK 1
+## Interprétation des informations sur les comptes et les groupes
 
 Exécutez la commande id pour afficher des informations sur votre compte et les groupes dont vous êtes membres :
 ```sh
 bigzb@lb-laptop:~$ id
-uid=1000(bigzb) gid=1000(bigzb) groups=1000(bigzb),4(adm),6(disk),20(dialout),27(sudo),107(input),109(kvm),123(lpadmin),134(vboxusers),137(libvirt),999(docker),64055(libvirt-qemu)
+uid=1000(bigzb) gid=1000(bigzb) groups=1000(bigzb),4(adm),6(disk),20(dialout),27(sudo)
 ```
 
 Quel est votre UID et quel est votre nom de compte?
@@ -18,7 +37,7 @@ De combien d’autres groupes êtes-vous membre ?
 
 - On peut voir que le champs groups contient 12 groupes au total j'appartient donc à 11 autres groupes que le principale.
 
-# Interprétation des métadonnées de contrôle d'accès sur les fichiers et répertoires
+## Interprétation des métadonnées de contrôle d'accès sur les fichiers et répertoires
 
 1) Pour les fichiers suivants, déterminez qui est le propriétaire et quel groupe possède le fichier 
 et caractériser le groupe de personnes qui savent lire, qui savent écrire et qui peuvent
@@ -71,7 +90,7 @@ utilisateur qui a la permission w sur le répertoire et qui est le propriétaire
 
 On appel ça le sticky bit.
 
-# Modification des droits d'accès
+## Modification des droits d'accès
 
 1. Créez un fichier et initialisez ses autorisations sur rw- --- --- avec les commandes suivantes:
 
@@ -106,7 +125,7 @@ bash: file: Permission denied
 ```
 
 
-# Donner à d'autres utilisateurs l'accès à vos fichiers
+## Donner à d'autres utilisateurs l'accès à vos fichiers
 
 Votre collègue est-il capable de lire les fichiers de votre répertoire personnel ? Si oui, pourquoi ?
 Si non, pourquoi pas ?
@@ -130,7 +149,7 @@ chgrp proj_a shared
 chmod 070 shared
 ```
 
-# Find
+## Find
 
 1. Que fait find avec les fichiers ou dossiers cachés?  
  - Il les affichent mais par contre il n'affiche pas les dossiers `..`  et seulement le `.` du répertoire courant.
@@ -181,3 +200,55 @@ le globbing ne prend pas en compte les fichiers cachés.
 ```sh
 find . -type f -exec grep -l 'root' {} \;
 ```
+
+
+# TASK 2
+
+Commande find pour lister tous les fichiers et repos world writable:
+
+```bash
+find . -perm -o+w
+```
+
+Execution du script [fix_permissions.sh](./fix_permissions.sh):
+
+```bash
+./fix_permissions.sh
+```
+
+L'execution me trouve bien les fichiers et directory world writable dans l'arborescence test_dir que j'ai pris soin de modifié pour avoir certains fichier/dir en world writable.
+
+Arborescence [test_dir.txt](./test_dir.txt)
+
+# TASK3
+
+Execution du script [fix_permissions.sh](./fix_permissions.sh):
+
+```bash
+./fix_permissions.sh <directory_name>
+```
+
+Arborescence [test_dir.txt](./test_dir.txt)
+
+# TASK4
+
+Pour la tâche 4 si la recherche de fichier world writable donne un résultat non vide alors on demande à l'utilisateur s'il souhaite enlever la permission world writable. Tant qu'il ne répond pas "y" ou "n" on lui demande. S'il le souhaite on fixe les permission sinon on ne fait rien.
+
+Execution du script [fix_permissions.sh](./fix_permissions.sh):
+
+```bash
+./fix_permissions.sh <directory_name>
+```
+
+Arborescence [test_dir.txt](./test_dir.txt)
+
+Les fichiers ne réapparaisse plus lors de la 2e execution de script => fonctionne.
+
+# TASK5 
+
+Ici j'ai juste recopié le script d'avant sous le nom [fix_group_permissions.sh](./fix_group_permissions.sh). Puis changer ce dernier pour qu'il affiche les worlds writable et les group writable (sauf ceux du groupe personel) sous deux liste séparé puis le demande de fix se fait pour tous les fichiers.
+
+J'ai aussi changer l'arborescence en conséquence [test_dir_task5.txt](./test_dir_task5.txt)
+
+Les fichiers ne réapparaisse plus lors de la 2e execution de script => fonctionne.
+
