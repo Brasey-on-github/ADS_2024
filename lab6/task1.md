@@ -95,3 +95,89 @@ chmod a+r,u+x file
 chmod u+x file
 ```
 
+2. Autorisations conflictuelles - Créez un fichier (vous en serez le propriétaire) où les autorisations sont configurées pour
+
+- ne pas autoriser le propriétaire ou le groupe à écrire dans le fichier, mais autorisez les autres utilisateurs à écrire dans le fichier.
+
+```sh
+$ chmod a=,o=rwx file
+$ echo "hi" > file 
+bash: file: Permission denied
+```
+
+
+# Donner à d'autres utilisateurs l'accès à vos fichiers
+
+Votre collègue est-il capable de lire les fichiers de votre répertoire personnel ? Si oui, pourquoi ?
+Si non, pourquoi pas ?
+
+- Oui car par défaut la permission de read est donner à tous le monde.
+
+Que devez-vous faire pour que votre collègue (et peut-être d'autres) puisse lire vos fichiers ? 
+
+- Il faut ajouter la permission de read pour les autre (o+r) ou bien faire en sorte que les personnes désirant lire les fichiers soit dans un groupe qui possède la permission read sur les fichiers.
+
+Que devez-vous faire pour que personne d’autre ne puisse lire vos fichiers ?
+
+- Il faut retiré la permissions de read pour les autres utilisateurs (0-r).
+
+Exo avec le dossier `shared`:
+
+```sh
+cd 
+mkdir shared
+chgrp proj_a shared
+chmod 070 shared
+```
+
+# Find
+
+1. Que fait find avec les fichiers ou dossiers cachés?  
+ - Il les affichent mais par contre il n'affiche pas les dossiers `..`  et seulement le `.` du répertoire courant.
+
+
+2. Utiliser find pour afficher tous les fichiers de votre répertoire personnel :
+
+ - qui finissent par `.c`, `.cpp` ou `.sh` :
+
+```sh
+find . -type f -name "*.c" -o -name "*.cpp" -o -name "*.sh"
+``` 
+ - qui sont executables :
+
+```sh
+find . -type f -executable # GNU-based find only (not available to Mac-OS user)
+```  
+
+ - qui n'ont pas été modifiés depuis plus de 2 ans :
+
+```sh
+find . -type f -mtime +730
+``` 
+
+ - qui n'ont pas été accédés depuis plus de 2 ans :
+
+```sh
+find . -type f -atime +730
+``` 
+
+ - qui n'ont pas été accédés depuis plus de 3 ans et plus de 3MB :
+
+```sh
+find . -type f -atime +1095 -size +3M
+```
+
+ - les dossier qui ont pour nom `.git`:
+
+```sh
+find  . -type d -name ".git"
+```
+3. Supposons que votre répertoire actuel ne contienne aucun sous-répertoire. Vous souhaitez afficher tous
+les fichiers contenant le mot `root` . Laquelle des deux commandes est correcte et pourquoi ?
+
+C'est évidement la première car la deuxième fait appelle au globing pour retrouver les fichiers or on se rappel bien que 
+le globbing ne prend pas en compte les fichiers cachés.
+
+```sh
+find . -type f -exec grep -l 'root' {} \;
+```
